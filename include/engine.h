@@ -5,6 +5,10 @@
 
 class ModelEngine{
     public:
+        std::string Name();
+        int Width();
+        int Height();
+        int Length();
         void SetName(std::string Name);
         void SetWidth(int Size);
         void SetHeight(int Size);

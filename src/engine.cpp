@@ -4,10 +4,6 @@
 
 #include "include/engine.h"
 
-ModelEngine::ModelEngine(std::string name, int w, int h, int l, int axis){
-    SetName(name);
-}
-
 void ModelEngine::SetName(std::string Name){
     name = Name;
 }
@@ -22,4 +18,20 @@ void ModelEngine::SetHeight(int Size){
 
 void ModelEngine::SetLength(int Size){
     l = Size;
+}
+
+int ModelEngine::Height(void){
+    return h;
+}
+
+int ModelEngine::Length(void){
+    return l;
+}
+
+int ModelEngine::Width(void){
+    return w;
+}
+
+std::string ModelEngine::Name(void){
+    return name;
 }
