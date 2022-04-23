@@ -5,15 +5,14 @@ import pygame
 
 #pygame stuff
 window_title = "donuts donuts donuts"
-window_height = 640
-window_width = 480
+window_height = 720
+window_width = 720
 font = "Arial"
 font_size = 25
 depth = 0
 vsync = 0
 display = 0
 flags = 0
-donut_size = 100
 
 #colors
 white = (255, 255, 255)
@@ -25,7 +24,9 @@ class Donut():
         self.enabled = False
         self.size = 0
         self.pos_x = 0
+        self.offset_x = window_width/2
         self.pos_y = 0
+        self.offset_y = window_height/2
         self.axis = 0
         self.r1 = 40 #flat 2d circle
         self.r2 = 100 #distance from radius
@@ -34,22 +35,25 @@ class Donut():
         """ Rotates the axis to the specified axis position. """
         for T in range(0, 628, 15):
             cosT, sinT = math.cos(T/100), math.sin(T/100)
-            self.pos_x2 = self.r2 + (self.r1*cosT)
-            self.pos_y2 = self.r1 + sinT
+            pos_x2 = self.r2 + self.r1 * cosT
+            pos_y2 = self.r1 + sinT
             for P in range(0, 628, 10):
                 cosP, sinP = math.cos(P/100), math.sin(P/100)
-                self.pos_x = self.pos_x2*cosP
-                self.pos_y = self.pos_y2
-                self.draw(self.size, self.pos_x, self.pos_y)
-                pygame.display.update()
-        print("donut rotating.")
+                pos_x = pos_x2*cosP
+                pos_y = pos_y2
+                self.draw(pos_x, pos_y)
 
-    def draw(self, size, pos_x, pos_y):
+    def draw(self, pos_x, pos_y):
         """ Draws the donut wherever pos_x and pos_y are set """
-        self.size = size
-        self.pos_x = pos_x
-        self.pos_y = pos_y
-        pygame.draw.circle(self.screen, white, (self.pos_x, self.pos_y), 1)
+        #self.pos_x = pos_x
+        #self.pos_y = pos_y
+        pygame.draw.circle(
+                self.screen,
+                white,
+                (pos_x+self.offset_x, pos_y+self.offset_y),
+                1
+            )
+        pygame.display.update()
 
 class Screen():
     """ instance for initializing basic window stuff. """
@@ -78,7 +82,7 @@ if __name__ == "__main__":
             #place donuts wherever user clicks
             if event.type == pygame.MOUSEBUTTONUP:
                 pos_x, pos_y = pygame.mouse.get_pos()
-                screen.donut.draw(donut_size, pos_x, pos_y)
+                screen.donut.draw(pos_x, pos_y)
                 screen.donut.rotate()
             if event.type == pygame.QUIT:
                 pygame.quit()
