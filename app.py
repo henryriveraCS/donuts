@@ -34,9 +34,14 @@ class Donut():
         """ Rotates the axis to the specified axis position. """
         for T in range(0, 628, 15):
             cosT, sinT = math.cos(T/100), math.sin(T/100)
-            self.pos_x = self.r2 + (self.r1*cosT)
-            self.pos_y = self.r1 + sinT
-            self.draw(self.size, self.pos_x, self.pos_y)
+            self.pos_x2 = self.r2 + (self.r1*cosT)
+            self.pos_y2 = self.r1 + sinT
+            for P in range(0, 628, 10):
+                cosP, sinP = math.cos(P/100), math.sin(P/100)
+                self.pos_x = self.pos_x2*cosP
+                self.pos_y = self.pos_y2
+                self.draw(self.size, self.pos_x, self.pos_y)
+                pygame.display.update()
         print("donut rotating.")
 
     def draw(self, size, pos_x, pos_y):
