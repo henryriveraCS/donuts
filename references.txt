@@ -1,1 +1,1 @@
-https://www.lukechikkala.com/post/opengl-on-macos
+https://www.pygame.org/docs/ref/display.html#pygame.display.set_mode
