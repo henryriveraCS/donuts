@@ -54,7 +54,7 @@ class Donut():
 
                 x2 = self.r2 + self.r1 * cosT
                 y2 = self.r1 * sinT
-                for P in range(0, 628, 10):
+                for P in range(0, 628, 15):
                     cosP, sinP = math.cos(P/100), math.sin(P/100)
 
                     x = self.r1 * sinB * sinT + cosB * cosP * x2
@@ -69,6 +69,7 @@ class Donut():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     exit()
+            pygame.display.update()
 
     def draw(self, x, y):
         """ Draws the donut """
@@ -78,7 +79,6 @@ class Donut():
                 (x+self.x_offset, y+self.y_offset),
                 1
             )
-        pygame.display.update()
 
 class Screen():
     """ instance for initializing basic window stuff. """
