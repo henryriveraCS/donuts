@@ -23,6 +23,8 @@ class Donut():
     def __init__(self, screen):
         self.screen = screen
         self.enabled = False
+        self.A = 0
+        self.B = 0
         self.x_offset = window_width/2
         self.y_offset = window_height/2
         self.r1 = 40 #flat 2d circle
@@ -42,20 +44,34 @@ class Donut():
                 self.draw(x, y)
     """
     def setup(self):
-        for T in range(0, 628, 15):
-            cosT, sinT = math.cos(T/100), math.sin(T/100)
+        while True:
+            self.screen.fill((black))
+            cosB, sinB = math.cos(self.B), math.sin(self.B)
+            cosA, sinA = math.cos(self.A), math.sin(self.A)
 
-            x2 = self.r2 + self.r1 * cosT
-            y2 = self.r1 * sinT
-            for P in range(0, 628, 10):
-                cosP, sinP = math.cos(P/100), math.sin(P/100)
+            for T in range(0, 628, 40):
+                cosT, sinT = math.cos(T/100), math.sin(T/100)
 
-                x = x2 * cosP
-                y = y2
-                self.draw(x, y)
+                x2 = self.r2 + self.r1 * cosT
+                y2 = self.r1 * sinT
+                for P in range(0, 628, 10):
+                    cosP, sinP = math.cos(P/100), math.sin(P/100)
+
+                    x = self.r1 * sinB * sinT + cosB * cosP * x2
+                    y = -cosA * sinB * cosP * x2 + self.r1 * cosA * cosB * sinT - sinA * sinP * x2
+                    self.draw(x, y)
+            if self.A != 2:
+                self.A += 0.001
+                self.B += 0.0005
+            else:
+                self.A = 0
+                self.B = 0
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    exit()
 
     def draw(self, x, y):
-        """ Draws the donut wherever pos_x and pos_y are set """
+        """ Draws the donut """
         pygame.draw.circle(
                 self.screen,
                 white,
@@ -77,15 +93,4 @@ if __name__ == "__main__":
     pygame.init()
     screen = Screen()
     pygame.display.update()
-    while True:
-        ev = pygame.event.get()
-        for event in ev:
-            #place donuts wherever user clicks
-            if event.type == pygame.MOUSEBUTTONUP:
-                pos_x, pos_y = pygame.mouse.get_pos()
-                print(pos_x, pos_y)
-                #screen.donut.draw(pos_x, pos_y)
-                screen.donut.setup()
-                #screen.donut.rotate()
-            if event.type == pygame.QUIT:
-                pygame.quit()
+    screen.donut.setup()
