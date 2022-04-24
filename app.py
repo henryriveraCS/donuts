@@ -45,9 +45,14 @@ class Donut():
         for T in range(0, 628, 15):
             cosT, sinT = math.cos(T/100), math.sin(T/100)
 
-            x = self.r2 + self.r1 * cosT
-            y = self.r1 * sinT
-            self.draw(x, y)
+            x2 = self.r2 + self.r1 * cosT
+            y2 = self.r1 * sinT
+            for P in range(0, 628, 10):
+                cosP, sinP = math.cos(P/100), math.sin(P/100)
+
+                x = x2 * cosP
+                y = y2
+                self.draw(x, y)
 
     def draw(self, x, y):
         """ Draws the donut wherever pos_x and pos_y are set """
@@ -67,17 +72,6 @@ class Screen():
         self.screen = pygame.display.set_mode((window_height, window_width))
         #self.screen.fill(black)
         self.donut = Donut(self.screen) #updated when user clicks on screen
-        """
-        self.screen = pygame.display.set_mode(
-                size=(window_height, window_width),
-                flags=flags,
-                depth=depth
-                )
-        """
-
-    def load_donut(self, pos_x, pos_y):
-        """ Loads donut wherever user clicks on the screen. """
-        self.donut.draw(pos_x, pos_y)
 
 if __name__ == "__main__":
     pygame.init()
